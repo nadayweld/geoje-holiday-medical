@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>거제 추석 병원·약국 안내</title>
+<style>
+  :root {
+    --pink: #e0356b;
+    --pink-dark: #c11f54;
+    --pink-bg: #fff0f4;
+    --green: #1e8a5f;
+    --green-bg: #eafaf2;
+    --gray: #6b7280;
+    --line: #ececec;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #222;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.5;
+    padding-bottom: 40px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 14px; }
+  header.hero {
+    background: linear-gradient(135deg, var(--pink), #ff7a9c);
+    color: #fff;
+    padding: 28px 18px 22px;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 18px;
+  }
+  header.hero .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.22);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  header.hero h1 {
+    font-size: 22px;
+    margin: 6px 0 8px;
+    line-height: 1.35;
+  }
+  header.hero p {
+    font-size: 13.5px;
+    opacity: 0.95;
+    margin: 0;
+  }
+  .quick-call {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .quick-call a {
+    flex: 1;
+    background: #fff;
+    color: var(--pink-dark);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 4px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  section { margin-bottom: 26px; }
+  h2.sec-title {
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--text);
+  }
+  h2.sec-title .sub {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 400;
+    margin-left: auto;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .card.er {
+    border-color: #ffd0dc;
+    background: var(--pink-bg);
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .card .name {
+    font-weight: 700;
+    font-size: 15.5px;
+  }
+  .card .tag {
+    font-size: 11px;
+    background: var(--pink);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .card .meta {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+  .card .meta a {
+    color: var(--pink-dark);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .card .note {
+    font-size: 12.5px;
+    color: var(--pink-dark);
+    font-weight: 600;
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px 10px;
+  }
+  .sched {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-top: 4px;
+  }
+  .drow {
+    font-size: 12px;
+    border-radius: 8px;
+    padding: 5px 7px;
+    background: #f5f5f5;
+  }
+  .drow.open { background: var(--green-bg); }
+  .drow.closed { background: #f2f2f2; color: #aaa; }
+  .drow .dlabel { display: block; font-size: 10.5px; color: var(--gray); }
+  .drow.open .dlabel { color: var(--green); }
+  .drow .dval { display: block; font-weight: 600; }
+
+  details.day-acc {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  details.day-acc summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 13px 14px;
+    font-weight: 700;
+    font-size: 14.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+  }
+  details.day-acc summary::-webkit-details-marker { display: none; }
+  details.day-acc summary::after {
+    content: "＋";
+    font-weight: 400;
+    color: var(--gray);
+    margin-left: 8px;
+  }
+  details.day-acc[open] summary::after { content: "－"; }
+  details.day-acc summary .cnt {
+    font-size: 11.5px;
+    color: var(--gray);
+    font-weight: 400;
+  }
+  .day-body { padding: 4px 14px 14px; border-top: 1px solid var(--line); }
+  .day-body h4 {
+    font-size: 13px;
+    color: var(--gray);
+    margin: 12px 0 6px;
+  }
+  .drow-item {
+    border-bottom: 1px dashed var(--line);
+    padding: 8px 0;
+  }
+  .drow-item:last-child { border-bottom: none; }
+  .di-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .di-name { font-weight: 600; font-size: 13.5px; }
+  .di-cat { font-size: 10.5px; color: #fff; background: var(--gray); padding: 1px 7px; border-radius: 8px; }
+  .di-bottom { display: flex; justify-content: space-between; font-size: 12.5px; margin-top: 3px; }
+  .di-bottom a { color: var(--pink-dark); text-decoration: none; font-weight: 600; }
+  .di-time { color: var(--green); font-weight: 600; }
+  p.empty { font-size: 12.5px; color: var(--gray); }
+
+  .mini-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .mini {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .mini-name { font-weight: 700; font-size: 12.5px; }
+  .mini-cat { font-size: 10px; color: var(--gray); }
+  .mini a { color: var(--pink-dark); text-decoration: none; }
+
+  .tip-box {
+    background: #fff7e6;
+    border: 1px solid #ffe1a8;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 13px;
+  }
+  .tip-box b { color: #b9740a; }
+
+  .contact-box {
+    background: #222;
+    color: #fff;
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .contact-box h3 { margin: 0 0 10px; font-size: 15px; }
+  .contact-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #3a3a3a;
+    font-size: 13.5px;
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row a { color: #ffb3c6; font-weight: 700; text-decoration: none; }
+
+  footer {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--gray);
+    margin-top: 24px;
+    line-height: 1.7;
+  }
+  .disclaimer {
+    font-size: 12px;
+    color: var(--pink-dark);
+    background: var(--pink-bg);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin: 16px 0;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">2026 추석 연휴 · 9.24(목) ~ 9.27(일)</span>
+    <h1>거제 추석 병원·약국<br>연휴 문 여는 곳 총정리</h1>
+    <p>응급실 · 달빛어린이병원 · 날짜별 병원/약국을 한눈에</p>
+    <div class="quick-call">
+      <a href="tel:119">🚑 119</a>
+      <a href="tel:129">☎ 보건복지 129</a>
+      <a href="tel:0556396200">🏥 보건소 당직실</a>
+    </div>
+  </header>
+
+  <div class="disclaimer">⚠️ 운영시간은 기관 사정에 따라 변경될 수 있습니다. 방문 전 반드시 전화로 확인하세요.</div>
+
+  <section>
+    <h2 class="sec-title">🚨 24시간 응급실 <span class="sub">연휴 내내 운영</span></h2>
+    <div class="card er">
+  <div class="card-head"><span class="name">거붕백병원</span></div>
+  <div class="meta">📍 상동동 · <a href="tel:0557330119">☎ 055-733-0119</a></div>
+  <div class="note">🚨 24시간 응급실 운영 (외래는 연휴 기간 휴진)</div>
+</div><div class="card er">
+  <div class="card-head"><span class="name">대우병원</span></div>
+  <div class="meta">📍 두모동 · <a href="tel:0556808119">☎ 055-680-8119</a></div>
+  <div class="note">🚨 24시간 응급실 운영 (외래는 연휴 기간 휴진)</div>
+</div><div class="card er">
+  <div class="card-head"><span class="name">맑은샘병원</span></div>
+  <div class="meta">📍 연초면 · <a href="tel:0557360119">☎ 055-736-0119</a></div>
+  <div class="note">🚨 24시간 응급실 운영 (외래는 연휴 기간 휴진)</div>
+</div>
+  </section>
+
+  <section>
+    <h2 class="sec-title">👶 달빛어린이병원</h2>
+    <div class="card">
+  <div class="card-head">
+    <span class="name">거제아동병원</span>
+  </div>
+  <div class="meta">📍 고현동 · <a href="tel:0556328225">☎ 055-632-8225</a></div>
+  <div class="sched"><div class="drow open"><span class="dlabel">9.24 (목)</span><span class="dval">08:30~18:00 (점심 12:30~14:00)</span></div><div class="drow open"><span class="dlabel">9.25 (금) 추석 당일</span><span class="dval">08:30~18:00 (점심 12:30~14:00)</span></div><div class="drow closed"><span class="dlabel">9.26 (토)</span><span class="dval">휴진</span></div><div class="drow open"><span class="dlabel">9.27 (일)</span><span class="dval">08:30~18:00 (점심 12:30~14:00)</span></div></div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="name">서울아동병원</span>
+  </div>
+  <div class="meta">📍 고현동 · <a href="tel:0556337599">☎ 055-633-7599</a></div>
+  <div class="sched"><div class="drow open"><span class="dlabel">9.24 (목)</span><span class="dval">00:00~24:00 (점심 13:00~14:00)</span></div><div class="drow open"><span class="dlabel">9.25 (금) 추석 당일</span><span class="dval">00:00~24:00 (점심 13:00~14:00)</span></div><div class="drow open"><span class="dlabel">9.26 (토)</span><span class="dval">00:00~24:00 (점심 13:00~14:00)</span></div><div class="drow open"><span class="dlabel">9.27 (일)</span><span class="dval">00:00~24:00 (점심 13:00~14:00)</span></div></div>
+</div>
+  </section>
+
+  <section>
+    <h2 class="sec-title">🤰 응급분만 가능</h2>
+    <div class="card er">
+  <div class="card-head"><span class="name">미즈맘여성의원</span></div>
+  <div class="meta">📍 상동동 · <a href="tel:0556889123">☎ 055-688-9123</a></div>
+  <div class="note">🚨 기존 내원 환자 24시간 응급분만 가능</div>
+</div><div class="card er">
+  <div class="card-head"><span class="name">엘르메디여성의원</span></div>
+  <div class="meta">📍 고현동 · <a href="tel:0556380038">☎ 055-638-0038</a></div>
+  <div class="note">🚨 24시간 응급분만만 가능</div>
+</div>
+  </section>
+
+  <section>
+    <h2 class="sec-title">📅 날짜별로 찾기 <span class="sub">탭해서 펼치기</span></h2>
+    
+<details class="day-acc" >
+  <summary>9.24 (목) <span class="cnt">병·의원 23 · 약국 31</span></summary>
+  <div class="day-body">
+    <h4>🏥 병·의원</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">거제중앙병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:0556353211">☎ 055-635-3211</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">대우아동병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:0556878595">☎ 055-687-8595</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">신청춘한방병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:050713622385">☎ 0507-1362-2385</a><span class="di-time">09:00~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">밴스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557360650">☎ 055-736-0650</a><span class="di-time">10:00~20:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울삼성정형외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556320111">☎ 055-632-0111</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">최수관의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556359855">☎ 055-635-9855</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통돌신경외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556367888">☎ 055-636-7888</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">메디컬웰런스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556337588">☎ 055-633-7588</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">아주대우대동소아청소년과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557311275">☎ 055-731-1275</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통증연합한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556814000">☎ 055-681-4000</a><span class="di-time">08:30~12:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">민들레의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556381792">☎ 055-638-1792</a><span class="di-time">08:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">웰빙플러스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556800875">☎ 055-680-0875</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">선이고운의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556334488">☎ 055-633-4488</a><span class="di-time">08:30~12:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">정내과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556871765">☎ 055-687-1765</a><span class="di-time">09:00~12:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">정안과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556367345">☎ 055-636-7345</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">파티마정형외과연합의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556883663">☎ 055-688-3663</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556325072">☎ 055-632-5072</a><span class="di-time">08:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">365경희더본한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557363875">☎ 055-736-3875</a><span class="di-time">09:30~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">초을한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556817533">☎ 055-681-7533</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">용하한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556333114">☎ 055-633-3114</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">가조보건진료소</span><span class="di-cat">보건진료소</span></div>
+  <div class="di-bottom"><a href="tel:0556396282">☎ 055-639-6282</a><span class="di-time">08:00~12:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556328225">☎ 055-632-8225</a><span class="di-time">08:30~18:00 (점심 12:30~14:00)</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">서울아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556337599">☎ 055-633-7599</a><span class="di-time">00:00~24:00 (점심 13:00~14:00)</span></div>
+</div>
+    <h4>💊 약국</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">고현시장약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556358818">☎ 055-635-8818</a><span class="di-time">09:00~17:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">이로운약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327772">☎ 055-632-7772</a><span class="di-time">08:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제로약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556326872">☎ 055-632-6872</a><span class="di-time">09:00~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">세일약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380814">☎ 055-638-0814</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">소나무약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380580">☎ 055-638-0580</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">바른약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0559500708">☎ 055-950-0708</a><span class="di-time">11:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">드림약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556338810">☎ 055-633-8810</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">진약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556379723">☎ 055-637-9723</a><span class="di-time">08:00~20:40</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥포로약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556883238">☎ 055-688-3238</a><span class="di-time">09:00~20:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">미리내약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556337903">☎ 055-633-7903</a><span class="di-time">09:00~17:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">따뜻한약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556877707">☎ 055-687-7707</a><span class="di-time">09:00~13:00 / 22:00~25:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368539">☎ 055-636-8539</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">새동인약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556885788">☎ 055-688-5788</a><span class="di-time">09:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다사랑온누리약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368981">☎ 055-636-8981</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다나약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556827222">☎ 055-682-7222</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태린약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:07096372949">☎ 070-9637-2949</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">행복플러스약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556800988">☎ 055-680-0988</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태평양약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556329010">☎ 055-632-9010</a><span class="di-time">08:50~21:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">소망약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556382493">☎ 055-638-2493</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제대우약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556810500">☎ 055-681-0500</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">정다운약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556363468">☎ 055-636-3468</a><span class="di-time">08:30~12:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">하당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327323">☎ 055-632-7323</a><span class="di-time">10:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제프라자약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556381351">☎ 055-638-1351</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">푸른약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556883044">☎ 055-688-3044</a><span class="di-time">09:00~20:00 (휴식 13:00~16:00)</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">능포시민약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556813199">☎ 055-681-3199</a><span class="di-time">09:00~17:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">열린약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556375696">☎ 055-637-5696</a><span class="di-time">08:30~12:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">김약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556321194">☎ 055-632-1194</a><span class="di-time">09:00~17:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">시민약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556334036">☎ 055-633-4036</a><span class="di-time">08:00~14:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">대우약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556812695">☎ 055-681-2695</a><span class="di-time">08:30~19:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥수당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556821616">☎ 055-682-1616</a><span class="di-time">09:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">우리약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556334178">☎ 055-633-4178</a><span class="di-time">08:00~15:00</span></div>
+</div>
+  </div>
+</details>
+<details class="day-acc" open>
+  <summary>9.25 (금) 추석 당일 <span class="cnt">병·의원 12 · 약국 14</span></summary>
+  <div class="day-body">
+    <h4>🏥 병·의원</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">신청춘한방병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:050713622385">☎ 0507-1362-2385</a><span class="di-time">09:00~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">밴스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557360650">☎ 055-736-0650</a><span class="di-time">10:00~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울삼성정형외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556320111">☎ 055-632-0111</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">최수관의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556359855">☎ 055-635-9855</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통돌신경외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556367888">☎ 055-636-7888</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통증연합한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556814000">☎ 055-681-4000</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">웰빙플러스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556800875">☎ 055-680-0875</a><span class="di-time">11:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556325072">☎ 055-632-5072</a><span class="di-time">08:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">365경희더본한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557363875">☎ 055-736-3875</a><span class="di-time">09:30~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">외포보건진료소</span><span class="di-cat">보건진료소</span></div>
+  <div class="di-bottom"><a href="tel:0556396281">☎ 055-639-6281</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556328225">☎ 055-632-8225</a><span class="di-time">08:30~18:00 (점심 12:30~14:00)</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">서울아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556337599">☎ 055-633-7599</a><span class="di-time">00:00~24:00 (점심 13:00~14:00)</span></div>
+</div>
+    <h4>💊 약국</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">이로운약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327772">☎ 055-632-7772</a><span class="di-time">09:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">세일약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380814">☎ 055-638-0814</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">바른약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0559500708">☎ 055-950-0708</a><span class="di-time">11:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">드림약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556338810">☎ 055-633-8810</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥포로약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556883238">☎ 055-688-3238</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">따뜻한약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556877707">☎ 055-687-7707</a><span class="di-time">22:00~25:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368539">☎ 055-636-8539</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다사랑온누리약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368981">☎ 055-636-8981</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태린약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:07096372949">☎ 070-9637-2949</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">행복플러스약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556800988">☎ 055-680-0988</a><span class="di-time">11:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태평양약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556329010">☎ 055-632-9010</a><span class="di-time">10:00~21:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">미래약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556820801">☎ 055-682-0801</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제프라자약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556381351">☎ 055-638-1351</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥수당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556821616">☎ 055-682-1616</a><span class="di-time">09:00~21:00</span></div>
+</div>
+  </div>
+</details>
+<details class="day-acc" >
+  <summary>9.26 (토) <span class="cnt">병·의원 16 · 약국 20</span></summary>
+  <div class="day-body">
+    <h4>🏥 병·의원</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">대우아동병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:0556878595">☎ 055-687-8595</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">신청춘한방병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:050713622385">☎ 0507-1362-2385</a><span class="di-time">09:00~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">밴스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557360650">☎ 055-736-0650</a><span class="di-time">10:00~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울삼성정형외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556320111">☎ 055-632-0111</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">최수관의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556359855">☎ 055-635-9855</a><span class="di-time">10:00~17:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통돌신경외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556367888">☎ 055-636-7888</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">아주대우대동소아청소년과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557311275">☎ 055-731-1275</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통증연합한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556814000">☎ 055-681-4000</a><span class="di-time">08:30~12:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">웰빙플러스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556800875">☎ 055-680-0875</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">선이고운의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556334488">☎ 055-633-4488</a><span class="di-time">08:30~12:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">파티마정형외과연합의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556883663">☎ 055-688-3663</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556325072">☎ 055-632-5072</a><span class="di-time">08:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">365경희더본한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557363875">☎ 055-736-3875</a><span class="di-time">09:30~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">용하한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556333114">☎ 055-633-3114</a><span class="di-time">08:30~15:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">덕곡보건진료소</span><span class="di-cat">보건진료소</span></div>
+  <div class="di-bottom"><a href="tel:0556396284">☎ 055-639-6284</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">서울아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556337599">☎ 055-633-7599</a><span class="di-time">00:00~24:00 (점심 13:00~14:00)</span></div>
+</div>
+    <h4>💊 약국</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">이로운약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327772">☎ 055-632-7772</a><span class="di-time">08:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제로약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556326872">☎ 055-632-6872</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">세일약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380814">☎ 055-638-0814</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">소나무약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380580">☎ 055-638-0580</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">바른약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0559500708">☎ 055-950-0708</a><span class="di-time">11:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">드림약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556338810">☎ 055-633-8810</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥포로약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556883238">☎ 055-688-3238</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">따뜻한약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556877707">☎ 055-687-7707</a><span class="di-time">09:00~13:00 / 22:00~25:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368539">☎ 055-636-8539</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">우당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556814609">☎ 055-681-4609</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다나약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556827222">☎ 055-682-7222</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태린약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:07096372949">☎ 070-9637-2949</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">행복플러스약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556800988">☎ 055-680-0988</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태평양약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556329010">☎ 055-632-9010</a><span class="di-time">08:50~21:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">상문약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556354382">☎ 055-635-4382</a><span class="di-time">11:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">하당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327323">☎ 055-632-7323</a><span class="di-time">10:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제프라자약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556381351">☎ 055-638-1351</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">능포시민약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556813199">☎ 055-681-3199</a><span class="di-time">09:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">대우약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556812695">☎ 055-681-2695</a><span class="di-time">08:30~19:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥수당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556821616">☎ 055-682-1616</a><span class="di-time">09:00~21:00</span></div>
+</div>
+  </div>
+</details>
+<details class="day-acc" >
+  <summary>9.27 (일) <span class="cnt">병·의원 17 · 약국 18</span></summary>
+  <div class="day-body">
+    <h4>🏥 병·의원</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">신청춘한방병원</span><span class="di-cat">병원</span></div>
+  <div class="di-bottom"><a href="tel:050713622385">☎ 0507-1362-2385</a><span class="di-time">09:00~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">밴스의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557360650">☎ 055-736-0650</a><span class="di-time">10:00~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울삼성정형외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556320111">☎ 055-632-0111</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제통돌신경외과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556367888">☎ 055-636-7888</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">아주대우대동소아청소년과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557311275">☎ 055-731-1275</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">파티마정형외과연합의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556883663">☎ 055-688-3663</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556325072">☎ 055-632-5072</a><span class="di-time">08:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다임치과의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557362875">☎ 055-736-2875</a><span class="di-time">09:30~13:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">한결부부한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:050714603650">☎ 0507-1460-3650</a><span class="di-time">09:30~13:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">365경희더본한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0557363875">☎ 055-736-3875</a><span class="di-time">09:30~16:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">초을한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556817533">☎ 055-681-7533</a><span class="di-time">14:00~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제동백한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556882525">☎ 055-688-2525</a><span class="di-time">09:30~15:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥포한의원</span><span class="di-cat">의원</span></div>
+  <div class="di-bottom"><a href="tel:0556878472">☎ 055-687-8472</a><span class="di-time">09:30~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">가조보건진료소</span><span class="di-cat">보건진료소</span></div>
+  <div class="di-bottom"><a href="tel:0556396282">☎ 055-639-6282</a><span class="di-time">08:00~12:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">학동보건진료소</span><span class="di-cat">보건진료소</span></div>
+  <div class="di-bottom"><a href="tel:0556396274">☎ 055-639-6274</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556328225">☎ 055-632-8225</a><span class="di-time">08:30~18:00 (점심 12:30~14:00)</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">서울아동병원</span><span class="di-cat">달빛어린이병원</span></div>
+  <div class="di-bottom"><a href="tel:0556337599">☎ 055-633-7599</a><span class="di-time">00:00~24:00 (점심 13:00~14:00)</span></div>
+</div>
+    <h4>💊 약국</h4>
+    <div class="drow-item">
+  <div class="di-top"><span class="di-name">이로운약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327772">☎ 055-632-7772</a><span class="di-time">08:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">세일약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380814">☎ 055-638-0814</a><span class="di-time">10:00~20:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">소나무약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556380580">☎ 055-638-0580</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">바른약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0559500708">☎ 055-950-0708</a><span class="di-time">11:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">드림약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556338810">☎ 055-633-8810</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">옥포로약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556883238">☎ 055-688-3238</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">따뜻한약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556877707">☎ 055-687-7707</a><span class="di-time">22:00~25:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">고현서울약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368539">☎ 055-636-8539</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">우당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556814609">☎ 055-681-4609</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다사랑온누리약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556368981">☎ 055-636-8981</a><span class="di-time">08:30~18:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">다나약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556827222">☎ 055-682-7222</a><span class="di-time">09:00~13:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태린약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:07096372949">☎ 070-9637-2949</a><span class="di-time">10:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">태평양약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556329010">☎ 055-632-9010</a><span class="di-time">08:50~21:30</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">하당약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556327323">☎ 055-632-7323</a><span class="di-time">10:00~21:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">거제프라자약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556381351">☎ 055-638-1351</a><span class="di-time">09:00~22:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">푸른약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556883044">☎ 055-688-3044</a><span class="di-time">09:00~21:00 (휴식 13:00~16:00)</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">능포시민약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556813199">☎ 055-681-3199</a><span class="di-time">09:00~19:00</span></div>
+</div><div class="drow-item">
+  <div class="di-top"><span class="di-name">대우약국</span><span class="di-cat">약국</span></div>
+  <div class="di-bottom"><a href="tel:0556812695">☎ 055-681-2695</a><span class="di-time">08:30~19:30</span></div>
+</div>
+  </div>
+</details>
+  </section>
+
+  <section>
+    <h2 class="sec-title">⭐ 연휴 내내(4일) 여는 곳</h2>
+    <div class="mini-grid">
+      <div class="mini"><span class="mini-name">신청춘한방병원</span> <span class="mini-cat">병원</span><br><a href="tel:050713622385">☎ 0507-1362-2385</a> · 📍고현동</div><div class="mini"><span class="mini-name">밴스의원</span> <span class="mini-cat">의원</span><br><a href="tel:0557360650">☎ 055-736-0650</a> · 📍고현동</div><div class="mini"><span class="mini-name">고현서울삼성정형외과의원</span> <span class="mini-cat">의원</span><br><a href="tel:0556320111">☎ 055-632-0111</a> · 📍고현동</div><div class="mini"><span class="mini-name">거제통돌신경외과의원</span> <span class="mini-cat">의원</span><br><a href="tel:0556367888">☎ 055-636-7888</a> · 📍고현동</div><div class="mini"><span class="mini-name">거제의원</span> <span class="mini-cat">의원</span><br><a href="tel:0556325072">☎ 055-632-5072</a> · 📍거제면</div><div class="mini"><span class="mini-name">365경희더본한의원</span> <span class="mini-cat">의원</span><br><a href="tel:0557363875">☎ 055-736-3875</a> · 📍고현동</div><div class="mini"><span class="mini-name">서울아동병원</span> <span class="mini-cat">달빛어린이병원</span><br><a href="tel:0556337599">☎ 055-633-7599</a> · 📍고현동</div>
+    </div>
+    <h4 style="font-size:13px;color:var(--gray);margin:14px 0 6px;">💊 약국</h4>
+    <div class="mini-grid">
+      <div class="mini"><span class="mini-name">이로운약국</span><br><a href="tel:0556327772">☎ 055-632-7772</a> · 📍고현동</div><div class="mini"><span class="mini-name">세일약국</span><br><a href="tel:0556380814">☎ 055-638-0814</a> · 📍고현동</div><div class="mini"><span class="mini-name">바른약국</span><br><a href="tel:0559500708">☎ 055-950-0708</a> · 📍옥포동</div><div class="mini"><span class="mini-name">드림약국</span><br><a href="tel:0556338810">☎ 055-633-8810</a> · 📍고현동</div><div class="mini"><span class="mini-name">옥포로약국</span><br><a href="tel:0556883238">☎ 055-688-3238</a> · 📍옥포동</div><div class="mini"><span class="mini-name">따뜻한약국</span><br><a href="tel:0556877707">☎ 055-687-7707</a> · 📍옥포동</div><div class="mini"><span class="mini-name">고현서울약국</span><br><a href="tel:0556368539">☎ 055-636-8539</a> · 📍고현동</div><div class="mini"><span class="mini-name">태린약국</span><br><a href="tel:07096372949">☎ 070-9637-2949</a> · 📍고현동</div><div class="mini"><span class="mini-name">태평양약국</span><br><a href="tel:0556329010">☎ 055-632-9010</a> · 📍고현동</div><div class="mini"><span class="mini-name">거제프라자약국</span><br><a href="tel:0556381351">☎ 055-638-1351</a> · 📍고현동</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="tip-box">
+      <b>📱 TIP</b> — 이미지를 통째로 저장하기보다, 필요한 병원·약국 이름을 네이버지도에서 검색해 <b>[저장]</b> 해두면 연휴 중 훨씬 빠르게 찾을 수 있습니다. 지도의 평소 영업시간과 추석 특별 운영시간은 다를 수 있으니 방문 전 전화 확인은 필수입니다.
+    </div>
+  </section>
+
+  <section>
+    <div class="contact-box">
+      <h3>☎ 긴급 연락처</h3>
+      <div class="contact-row"><span>거제시보건소 당직실</span><a href="tel:0556396200">055-639-6200</a></div>
+      <div class="contact-row"><span>거붕백병원 응급실</span><a href="tel:0557330119">055-733-0119</a></div>
+      <div class="contact-row"><span>대우병원 응급실</span><a href="tel:0556808123">055-680-8123</a></div>
+      <div class="contact-row"><span>맑은샘병원 응급실</span><a href="tel:0557360119">055-736-0119</a></div>
+      <div class="contact-row"><span>응급의료정보센터</span><a href="tel:119">119 / 129</a></div>
+    </div>
+  </section>
+
+  <footer>
+    자료 출처: 거제시 추석 연휴 문 여는 병·의원 및 약국 안내<br>
+    운영 일정은 기관 사정에 따라 변경될 수 있으니 방문 전 전화 확인 필수<br>
+    응급의료포털 e-gen.or.kr에서도 실시간 확인 가능
+  </footer>
+
+</div>
+</body>
+</html>
